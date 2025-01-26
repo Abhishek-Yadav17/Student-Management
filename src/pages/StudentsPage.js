@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { Button, Modal, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Drawer } from '@mui/material';
-import { Edit, Delete, Visibility } from '@mui/icons-material';
+import { Button, Modal, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Drawer, AppBar, Toolbar, IconButton, Badge } from '@mui/material';
+import { Edit, Delete, Visibility, Dashboard, ExitToApp, Storefront, Article, Login, ErrorOutline, Add, Search, Flag, Notifications, AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -105,17 +105,45 @@ function StudentsPage() {
     }
   };
 
+  const handleButtonClick = (buttonName) => {
+    if (buttonName === 'notFound') {
+      navigate('/not-found');
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
+        <AppBar position="absolute" sx={{ backgroundColor: '#F9FAFB', boxShadow: 'none', color: 'black', }}>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Typography variant="h6">Student Management</Typography>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                    <IconButton color="inherit">
+                    <Search />
+                    </IconButton>
+                    <IconButton color="inherit">
+                    <Flag />
+                    </IconButton>
+                    <IconButton color="inherit">
+                    <Badge badgeContent={4} color="error">
+                        <Notifications />
+                    </Badge>
+                    </IconButton>
+                    <IconButton color="inherit">
+                    <AccountCircle />
+                    </IconButton>
+                </Box>
+                </Toolbar>
+        </AppBar>
         <Drawer
           sx={{
-            width: 250,
+            width: 300,
             flexShrink: 0,
             '& .MuiDrawer-paper': {
-              width: 250,
+              width: 300,
               boxSizing: 'border-box',
               backgroundColor: '#fefefe',
-              color: '#fff',
+              color: '#647482',
+              p: 1
             },
           }}
           variant="permanent"
@@ -127,36 +155,164 @@ function StudentsPage() {
             fullWidth 
             variant="contained" 
             color="primary" 
-            sx={{ mt: 2 }} 
+            sx={{
+                mt: 3,
+                backgroundColor: '#fff',
+                color: '#647482',
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                fontSize: '0.875rem',
+                textTransform: 'capitalize',
+                '&:hover': {
+                  backgroundColor: '#F6F7F8',
+                  boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }} 
             onClick={handleNavigateToStudents}
           >
+            <Dashboard sx={{ mr: 2, fontSize: '1.1rem' }} />
             Students Page
           </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+                mt: 2,
+                backgroundColor: '#fff',
+                color: '#647482',
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                fontSize: '0.875rem',
+                textTransform: 'capitalize',
+                '&:hover': {
+                backgroundColor: '#F6F7F8',
+                boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }}
+            onClick={() => alert('Product Page')}
+            >
+            <Storefront sx={{ mr: 2, fontSize: '1.1rem' }} />
+            Product
+            </Button>
+
+            <Button
+            fullWidth
+            variant="contained"
+            sx={{
+                mt: 2,
+                backgroundColor: '#fff',
+                color: '#647482',
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                fontSize: '0.875rem',
+                textTransform: 'capitalize',
+                '&:hover': {
+                backgroundColor: '#F6F7F8',
+                boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }}
+            onClick={() => alert('Blog Page')}
+            >
+            <Article sx={{ mr: 2, fontSize: '1.1rem' }} />
+            Blog
+            </Button>
+
+            <Button
+            fullWidth
+            variant="contained"
+            sx={{
+                mt: 2,
+                backgroundColor: '#fff',
+                color: '#647482',
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                fontSize: '0.875rem',
+                textTransform: 'capitalize',
+                '&:hover': {
+                backgroundColor: '#F6F7F8',
+                boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }}
+            onClick={handleLogout}
+            >
+            <Login sx={{ mr: 2, fontSize: '1.1rem' }} />
+            Sign In
+            </Button>
+
+            <Button
+            fullWidth
+            variant="contained"
+            sx={{
+                mt: 2,
+                backgroundColor: '#fff',
+                color: '#647482',
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                fontSize: '0.875rem',  // Smaller text
+                textTransform: 'capitalize',
+                '&:hover': {
+                backgroundColor: '#F6F7F8',
+                boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }}
+            onClick={() => handleButtonClick('notFound')}
+            >
+            <ErrorOutline sx={{ mr: 2, fontSize: '1.1rem' }} />
+            Not Found
+            </Button>
           <Button 
             fullWidth 
             variant="contained" 
             color="error"
-            sx={{ mt: 2 }} 
+            sx={{
+                mt: 2,
+                padding: '10px 20px',
+                justifyContent: 'flex-start',
+                borderRadius: '12px',
+                backgroundColor: "#F7DDD8",
+                fontSize: '0.875rem',
+                textTransform: 'capitalize',
+                color: "red",
+                '&:hover': {
+                  backgroundColor: '#F7DDD8',
+                  boxShadow: 'none',
+                },
+                boxShadow: 'none',
+            }} 
             onClick={handleLogout}
           >
+            <ExitToApp sx={{ mr: 2, fontSize: '1.1rem' }} />
             Logout
           </Button>
         </Box>
       </Drawer>
 
-      <Box sx={{ flexGrow: 1, p: 3, backgroundColor: '#ededf0' }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', }}>
-          Students List
-        </Typography>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={openAddModal}
-          sx={{ mb: 2 }}
-        >
-          Add Student
-        </Button>
-        <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <Box sx={{ flexGrow: 1, p: 3, backgroundColor: '#F9FAFB', mt: '4vw', px: '3vw' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2}}>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', fontSize: "1.5rem"}}>
+            Students
+            </Typography>
+            <Button 
+            variant="contained" 
+            color="white" 
+            startIcon={<Add />}
+            onClick={openAddModal}
+            sx={{ mb: 2, color: "white", backgroundColor: "#1C252E", borderRadius: "12px", padding: "7px 16px", textTransform: "capitalize", fontWeight: "bold", boxShadow: 'none'}}
+            >
+            Add Student
+            </Button>
+        </Box>
+        <TableContainer component={Paper} sx={{ mt: 2, borderRadius: '12px', boxShadow: 'none' }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -170,7 +326,11 @@ function StudentsPage() {
             </TableHead>
             <TableBody>
               {students.map((student) => (
-                <TableRow key={student.id}>
+                <TableRow key={student.id} sx={{
+                    '&:hover': {
+                      backgroundColor: '#F4F6F8',
+                    },
+                  }}>
                   <TableCell>{student.id}</TableCell>
                   <TableCell>{student.name}</TableCell>
                   <TableCell>{student.class}</TableCell>

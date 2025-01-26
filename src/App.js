@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import LoginPage from './pages/LoginPage';
 import StudentsPage from './pages/StudentsPage';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ function App() {
           path="/students"
           element={user ? <StudentsPage /> : <Navigate to="/login" />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

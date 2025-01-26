@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
-import { Button, TextField, Box, Typography, Container } from '@mui/material';
+import { Button, TextField, Box, Typography, Container, Link, IconButton, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; 
+import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -22,7 +25,8 @@ function LoginPage() {
 
   return (
     <Container component="main" maxWidth={false} sx={{ 
-      backgroundColor: '#DDD1F3',  
+      backgroundColor: '#EBF1F1',
+      background: 'linear-gradient(to right bottom, #EDF2F2,#DDE8EB,rgb(243, 231, 225))',  
       height: '100vh',
       width: '100%',
       display: 'flex',
@@ -34,17 +38,32 @@ function LoginPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          p: 3,
-          boxShadow: 7,
-          borderRadius: 6,
-          bgcolor: '#F0F2F3', 
+          p: '40px 24px',
+          borderRadius: 5   ,
+          bgcolor: '#F9FAFB', 
           width: '100%',
-          height: '270px',
-          maxWidth: 400,
+          height: 'auto',
+          maxWidth: 375,
         }}
       >
-        <Typography variant="h5" gutterBottom sx={{ color: '#000', mb: 3, fontWeight: 'bold', }}>
-          Login
+        <Typography variant="h5" gutterBottom sx={{ color: '#000', fontWeight: 'bold', fontSize: '1.3rem'}}>
+          Sign In
+        </Typography>
+
+        <Typography variant="body2" sx={{ mt: 1, mb: 5, color: '#63738D'}}>
+            Do you have an account? 
+            <Link 
+                href="#" 
+                sx={{ 
+                color: '#1877F2', 
+                textDecoration: 'none',
+                ml: '5px',
+                '&:hover': { 
+                    textDecoration: 'underline' 
+                } 
+                }}>
+                Get Started
+            </Link>
         </Typography>
         
         {error && (
@@ -62,25 +81,48 @@ function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           sx={{
             mb: 2,
-            input: { color: '#000' },
-            label: { color: '#757185' }, 
+            input: { color: '#000', fontSize: '0.875rem' },
+            label: { color: '#757185', fontSize: '0.875rem' }, 
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: '#999', 
+                borderRadius: '12px',
+                borderColor: '#C6C9CB', 
               },
               '&:hover fieldset': {
-                borderColor: '#000', 
+                borderColor: '#C6C9CB', 
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#000', 
+                borderColor: '#1877F2', 
               },
             },
             '& .MuiInputLabel-root.Mui-focused': {
-              color: '#000',
+              color: '#1877F2',
             },
           }}
         />
-
+        <Typography 
+        sx={{
+            display: 'flex', 
+            justifyContent: 'flex-end', 
+            width: '100%', 
+            mb: 1
+        }}
+        >
+        <Link 
+            href="#" 
+            sx={{
+            color: 'black', 
+            fontSize: '0.85rem',
+            my: '0.5vw',
+            textDecoration: 'none', 
+            '&:hover': { 
+                textDecoration: 'underline' 
+            }
+            }}
+        >
+            Forgot Password?
+        </Link>
+        </Typography>
         <TextField
           label="Password"
           type="password"
@@ -89,22 +131,23 @@ function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           sx={{
-            mb: 3,
-            input: { color: '#000' },
-            label: { color: '#757185' },
+            mb: 3.5,
+            input: { color: '#000', fontSize: '0.875rem' },
+            label: { color: '#757185', fontSize: '0.875rem' },
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: '#999',
+                borderRadius: '12px',
+                borderColor: '#C6C9CB',
               },
               '&:hover fieldset': {
-                borderColor: '#000',
+                borderColor: '#C6C9CB',
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#000',
+                borderColor: '#1877F2',
               },
             },
             '& .MuiInputLabel-root.Mui-focused': {
-              color: '#000',
+              color: '#1877F2',
             },
           }}
         />
@@ -112,18 +155,47 @@ function LoginPage() {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: '#4D35E2',  
+            backgroundColor: '#1C252E',  
             color: '#fff',  
-            width: '80%',              
-            '&:hover': {
-              backgroundColor: '#288CE1', 
-            },
+            width: '100%',
+            textTransform: 'capitalize',
+            fontWeight: 'bold',
+            borderRadius: '12px',
+            padding: '12px 22px',
           }}
           fullWidth
           onClick={handleLogin}
         >
-          Login
+          Sign In
         </Button>
+        <Divider sx={{ width: '100%', mb: 2, position: 'relative', mt: 5 }}>
+        <Typography
+          variant="body2"
+          sx={{
+            position: 'absolute',
+            left: '50%',
+            top: '-10px',
+            transform: 'translateX(-50%)',
+            color: '#757185',
+            fontSize: '0.75rem',
+            mx: '2'
+          }}
+        >
+          OR
+        </Typography>
+      </Divider>
+
+      <Box sx={{ display: 'flex', gap: 1.5, mt: 2 }}>
+        <IconButton color="primary" aria-label="google">
+          <GoogleIcon />
+        </IconButton>
+        <IconButton color="primary" aria-label="github">
+          <GitHubIcon />
+        </IconButton>
+        <IconButton color="primary" aria-label="twitter">
+          <TwitterIcon />
+        </IconButton>
+      </Box>
       </Box>
     </Container>
   );
