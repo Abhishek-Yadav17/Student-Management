@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <Router basename='/'>
       <Routes>
         <Route path="/" element={user ? <Navigate to="/students" /> : <Navigate to="/login" />} />
         <Route
